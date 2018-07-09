@@ -6,6 +6,7 @@ const optionDefinitions = [
   { name: 'password', alias: 'p', type: String },
   { name: 'location', alias: 'l', type: String },
   { name: 'time', alias: 't', type: String },
+  { name: 'skip', alias: 's', type: String },
 ];
 
 //set the default values or use comand line args
@@ -39,7 +40,15 @@ const login = (page, options) => {
 };
 
 (async () => {
-  const browser = await puppeteer.launch({headless: false});
+  const currentDay = dateFormat(new Date(), 'dddd');
+  if (currentDay.toLowerCase() == (options.skip && options.skip.toLowerCase()) {
+    console.log("Skipping because it's ", options.skip);
+    return;
+  }
+  console.log("Starting job with options ", options)
+  console.log("at ", dateFormat(new Date(), "dddd, mmmm dS, yyyy, h:MM:ss TT"))
+  if (dateFormat)
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   await page.goto('https://basecampfitness.co/sign-in/');
@@ -74,6 +83,6 @@ const login = (page, options) => {
 
     modal.children[0].children[4].click();
   }, options);
-
+  console.log("seems to have worked for ", options.username);
   await browser.close();
 })();
